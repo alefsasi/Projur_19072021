@@ -1,0 +1,39 @@
+<div class="container">
+  <app-mensages-error></app-mensages-error>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Sobrenome</th>
+        <th scope="col">Email</th>
+        <th scope="col">Data de Nascimento</th>
+        <th scope="col">Escolaridade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of usuarios">
+        <th scope="row">{{ usuario.id | number }}</th>
+        <td>
+          {{usuario.nome}}
+        </td>
+        <td>{{ usuario.sobrenome}}</td>
+        <td>{{ usuario.email }}</td>
+        <td>{{ usuario.dataNascimento | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ getEscolaridade(usuario.escolaridade) }}</td>
+        <td>
+          <div class="text-right">
+            <button type="button" class="btn btn-primary btn-sm ml-1"
+              routerLink="/usuario/editar/{{usuario.id}}">Editar</button>
+            <button type="button" class="btn btn-danger btn-sm ml-1"
+              (click)="deletaUsuario(usuario.id)">Excluir</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="text-right">
+    <button type="button" class="btn btn-secondary btn-sm ml-1" routerLink="/usuario/criar">Novo Usuário</button>
+  </div>
+</div>

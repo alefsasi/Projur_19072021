@@ -1,0 +1,60 @@
+<form #f="ngForm" (ngSubmit)="onSubmit()">
+  <app-mensages-error></app-mensages-error>
+
+  <div class="form-group">
+    <label for="nome">Nome</label>
+    <input class="form-control" id="nome" placeholder="Seu primeiro nome..." name="nome" #nome="ngModel"
+      [(ngModel)]="usuario.nome" [class.is-invalid]="!nome.valid && nome.touched" maxlength="30" minlength="3" required>
+    <div *ngIf="!nome.valid && nome.touched" class="text-danger">
+      O nome precisa ser preenchido
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="nome">Sobrenome</label>
+    <input class="form-control" id="sobrenome" placeholder="Seu sobrenome..." name="sobrenome" #sobrenome="ngModel"
+      [(ngModel)]="usuario.sobrenome" [class.is-invalid]="!sobrenome.valid && sobrenome.touched" maxlength="50" minlength="3" required>
+    <div *ngIf="!sobrenome.valid && sobrenome.touched" class="text-danger">
+      O nome precisa ser preenchido
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="nome">E-mail</label>
+    <input class="form-control" id="email" placeholder="Seu email..." name="email" #email="ngModel"
+      [(ngModel)]="usuario.email" [class.is-invalid]="!email.valid && email.touched" maxlength="50" minlength="8" required>
+    <div *ngIf="(!email.valid && email.touched) || (email.touched && !validaEmail(email.value))" class="text-danger">
+      E-mail inválido
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="nome">Data de Nascimento</label>
+    <input class="form-control" placeholder="dd-mm-yyyy" name="dataNascimento" #dataNascimento="ngModel" ngbDatepicker
+      [(ngModel)]="nascimentoData" (click)="d.toggle()" #d="ngbDatepicker" type="date">
+    <div
+      *ngIf="!dataNascimento.valid && dataNascimento.touched || (dataNascimento.touched && !validarData(nascimentoData))"
+      class="text-danger">
+      Data nascimento inválido
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="escolaridade">Escolaridade</label>
+    <select #escolaridade="ngModel" class="form-control"
+      [class.is-invalid]="!escolaridade.valid && escolaridade.touched" id="escolaridade" name="escolaridade"
+      [(ngModel)]="usuario.escolaridade" required>
+      <option [ngValue]="undefined">Selecione...</option>
+      <option *ngFor="let escolaridade of escolaridades" [ngValue]=escolaridade.id>
+        {{escolaridade.descricao}}
+      </option>
+    </select>
+    <div *ngIf="!escolaridade.valid && escolaridade.touched" class="invalid-feedback">
+      Selecione o nível de escolaridade do usuario.
+    </div>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Salvar</button>
+    <button class="btn btn-secondary" type="button" routerLink="/usuario/listar">Cancelar</button>
+  </div>
+</form>
